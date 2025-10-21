@@ -120,7 +120,6 @@ function renderQuiz() {
 
         item.options.forEach((option, optionIndex) => {
             const label = document.createElement('label');
-            // type을 checkbox로 설정하여 복수 선택 가능
             label.innerHTML = `
                 <input type="checkbox" name="q${index}" value="${optionIndex}">
                 ${option.text}
