@@ -25,7 +25,7 @@ body {
 
 /* 퀴즈 제목 스타일 (검은색 텍스트 적용) */
 .quiz-title {
-    color: #000000; /* 검은색 적용 */
+    color: #000000;
     text-align: center;
     margin-bottom: 20px;
     font-size: 1.4em;
@@ -34,25 +34,12 @@ body {
 
 /* (10문항, 복수 선택 가능) 부분 글자 크기 조정 */
 .quiz-subtitle {
-    font-size: 0.8em; /* 제목보다 작게 설정 */
+    font-size: 0.8em;
     font-weight: normal;
 }
 
 
-/* 퀴즈 문항 블록 (질문 텍스트와 항목 텍스트에 검은색 적용) */
-.question-block h3 {
-    color: #000000; /* 질문 텍스트 검은색 */
-    margin-top: 0;
-    font-size: 1.1em;
-}
-
-.question-block label {
-    color: #000000; /* 항목 텍스트 검은색 */
-    display: block;
-    margin: 8px 0;
-    cursor: pointer;
-}
-
+/* 퀴즈 문항 블록 */
 .question-block {
     margin-bottom: 25px;
     padding: 15px;
@@ -60,10 +47,43 @@ body {
     border-radius: 10px;
 }
 
+/* 퀴즈 질문 (h3) 스타일 */
+.question-block h3 {
+    color: #000000;
+    margin-top: 0;
+    font-size: 1.1em;
+}
+
+/* --- [수정된 부분] 선택 항목 글자 간격 및 정렬 --- */
+
+.question-block label {
+    color: #000000;
+    
+    /* 1. 항목 간의 세로 간격(여백) 확대 */
+    margin: 15px 0; 
+    
+    /* 2. 체크박스와 텍스트를 한 줄에 정렬 */
+    display: flex; 
+    align-items: flex-start; /* 세로 정렬 상단 기준 */
+    cursor: pointer;
+}
+
+.question-block input[type="checkbox"] {
+    /* 체크박스와 텍스트 사이에 공간 확보 */
+    margin-right: 10px; 
+    /* 체크박스가 텍스트 줄의 맨 위에 오도록 조정 */
+    margin-top: 5px; 
+    /* 텍스트가 아무리 길어져도 체크박스 옆으로 정렬되게 함 */
+    flex-shrink: 0; 
+}
+
+/* ------------------------------------------- */
+
+
 /* 결과 확인 버튼 스타일 (남색 적용) */
 #submit-quiz {
     padding: 10px 20px;
-    background-color: #1A237E; /* 진한 남색 */ 
+    background-color: #1A237E;
     color: white;
     border: none;
     border-radius: 8px;
@@ -101,7 +121,7 @@ body {
     max-width: 600px;
     margin: 20px auto 20px auto; 
     padding: 12px 0;
-    background-color: #1A237E; /* 진한 남색 */
+    background-color: #1A237E;
     color: white;
     text-decoration: none;
     border-radius: 8px;
@@ -119,8 +139,8 @@ body {
 /* 현장 이벤트 안내 박스 스타일 수정 (남색 테두리/글자 적용) */
 .physical-card-info {
     font-size: 1.0em;
-    color: #1A237E; /* 글자색을 진한 남색으로 */
-    border: 1px dashed #1A237E; /* 테두리도 진한 남색으로 */
+    color: #1A237E;
+    border: 1px dashed #1A237E;
     padding: 15px;
     border-radius: 8px;
     margin-top: 25px;
