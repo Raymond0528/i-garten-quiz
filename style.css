@@ -25,7 +25,7 @@ body {
 
 /* 퀴즈 제목 스타일 (검은색 텍스트 적용) */
 .quiz-title {
-    color: #000000;
+    color: #000000; 
     text-align: center;
     margin-bottom: 20px;
     font-size: 1.4em;
@@ -34,7 +34,7 @@ body {
 
 /* (10문항, 복수 선택 가능) 부분 글자 크기 조정 */
 .quiz-subtitle {
-    font-size: 0.8em;
+    font-size: 0.8em; 
     font-weight: normal;
 }
 
@@ -49,23 +49,26 @@ body {
 
 /* 퀴즈 질문 (h3) 스타일 */
 .question-block h3 {
-    color: #000000;
+    color: #000000; 
     margin-top: 0;
     font-size: 1.1em;
 }
 
-/* --- [수정된 부분] 선택 항목 글자 간격 및 정렬 --- */
+/* --- [수정된 부분] 선택 항목 스타일 --- */
 
 .question-block label {
     color: #000000;
     
-    /* 1. 항목 간의 세로 간격(여백) 확대 */
-    margin: 15px 0; 
+    /* 1. 항목 간의 줄 간격 (Item Spacing)을 이전 기본값으로 좁게 유지 */
+    margin: 8px 0; 
     
     /* 2. 체크박스와 텍스트를 한 줄에 정렬 */
     display: flex; 
-    align-items: flex-start; /* 세로 정렬 상단 기준 */
+    align-items: flex-start; 
     cursor: pointer;
+    
+    /* 3. 줄넘김 시 행 간 간격 (Line Height)을 넓혀 가독성 확보 */
+    line-height: 1.5; 
 }
 
 .question-block input[type="checkbox"] {
