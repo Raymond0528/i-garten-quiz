@@ -32,7 +32,7 @@ body {
     line-height: 1.4;
 }
 
-/* (10문항) 부분 글자 크기 조정 */
+/* (10문항, 복수 선택 가능) 부분 글자 크기 조정 */
 .quiz-subtitle {
     font-size: 0.8em; /* 제목보다 작게 설정 */
     font-weight: normal;
