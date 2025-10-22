@@ -162,11 +162,9 @@ function calculateResult() {
          return;
     }
     
-    // 1. 최고 점수 유형 판별 (재미 이미지 용)
+    // 최고점 및 최저점 판별
     let maxScore = -1;
     let maxIndex = -1;
-    
-    // 2. 최저점 판별 (전문 분석 용)
     let minScore = 999;
     
     scores.forEach((score, index) => {
@@ -237,11 +235,12 @@ function createRadarChart(scores) {
             r: {
                 angleLines: { display: true },
                 suggestedMin: 0,
-                suggestedMax: maxPossibleScore, // [수정 반영] 시각적 효과를 위해 25점으로 설정
+                suggestedMax: maxPossibleScore, 
                 
+                // [수정 반영] 눈금 간격을 12.5로 조정하여 선을 최소화 (3개 선)
                 beginAtZero: true, 
                 ticks: {
-                    stepSize: 10,
+                    stepSize: 12.5, 
                     display: false
                 },
                 grid: {

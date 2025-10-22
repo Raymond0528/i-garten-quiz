@@ -23,7 +23,7 @@ body {
     box-sizing: border-box;
 }
 
-/* 퀴즈 제목 스타일 (검은색 텍스트 적용) */
+/* 퀴즈 제목 스타일 */
 .quiz-title {
     color: #000000;
     text-align: center;
@@ -34,7 +34,7 @@ body {
 
 /* (10문항, 복수 선택 가능) 부분 글자 크기 조정 */
 .quiz-subtitle {
-    font-size: 0.8em;
+    font-size: 0.8em; 
     font-weight: normal;
 }
 
@@ -69,7 +69,7 @@ body {
     flex-shrink: 0; 
 }
 
-/* 결과 확인 버튼 스타일 (남색 적용) */
+/* 결과 확인 버튼 스타일 */
 #submit-quiz {
     padding: 10px 20px;
     background-color: #1A237E;
@@ -103,7 +103,7 @@ body {
     box-shadow: none;
 }
 
-/* 다운로드 버튼 스타일 (남색, 흰색 볼드체 적용) */
+/* 다운로드 버튼 스타일 */
 #download-button {
     display: block; 
     width: calc(100% - 40px);
@@ -125,33 +125,56 @@ body {
     background-color: #0D1659;
 }
 
-/* --- [수정된 부분] 차트 및 분석 영역 그룹화 스타일 --- */
-#chart-analysis-area {
-    /* 전체를 감싸는 박스 스타일 적용 */
+/* --- [수정된 부분] 차트 섹션 (박스 분리 및 크기 최대화) --- */
+
+/* 차트 섹션 박스 스타일 적용 */
+#chart-section {
     padding: 20px;
-    background-color: #F0F8FF; /* 배경색: 더 괜찮은 하늘색 */
-    border: 2px solid #1A237E; /* 테두리: 진한 남색 */
+    background-color: #F0F8FF; 
+    border: 2px solid #1A237E; 
     border-radius: 8px;
     margin-top: 25px;
-    text-align: center;
+    text-align: center; /* 차트 중앙 정렬 */
 }
 
-#chart-analysis-area h3 {
-    color: #1A237E; /* 남색 */
+/* 차트 섹션 제목 스타일 */
+#chart-section h3 {
+    color: #1A237E;
     font-size: 1.5em;
+    margin-top: 0;
     margin-bottom: 15px;
+    text-align: left; 
+}
+
+/* 차트 래퍼 (차트 중앙 정렬 및 크기 최대화) */
+#chart-wrapper {
+    width: 100%;
+    /* 캔버스가 이 안에서 최대한 커지도록 설정 */
+    max-width: 450px; 
+    margin: 0 auto;
+}
+
+/* 분석 텍스트 섹션 박스 스타일 적용 (차트 박스와 분리) */
+#analysis-section {
+    padding: 20px;
+    background-color: #F0F8FF; 
+    border: 2px solid #1A237E; 
+    border-radius: 8px;
+    margin-top: 25px; /* 차트 박스와의 간격 확보 */
+    text-align: left;
 }
 
 /* 분석 제목 스타일 수정 */
 #analysis-title {
-    color: #1A237E !important; /* 남색 */
-    font-size: 1.4em !important; /* 글씨 크게 */
+    color: #1A237E !important; 
+    font-size: 1.4em !important; 
     font-weight: bold;
-    margin-top: 15px !important; /* 위쪽 여백 추가 */
+    margin-top: 0 !important;
     margin-bottom: 5px;
+    text-align: left;
 }
 
-/* 분석 텍스트 스타일 (문단 내 줄 간격 확대) */
+/* 분석 텍스트 스타일 */
 #expert-analysis {
     text-align: left;
     padding: 10px 0;
@@ -159,7 +182,7 @@ body {
 
 #analysis-content p {
     margin-bottom: 15px;
-    line-height: 1.7; /* 줄 간격 확대 */
+    line-height: 1.7; 
     font-size: 1em;
 }
 
