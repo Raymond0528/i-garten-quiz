@@ -1,7 +1,7 @@
 // 5가지 전문 역량 (레이더 차트 축)
-// [수정 반영] 차트 글자 줄바꿈 반영
 const EXPERT_LABELS = ['실행 및 지구력', '정보 처리 능력', '사회적 상호작용', '구조화 및 계획력', '창의적 사고 및 통찰'];
-const CHART_LABELS = ['실행 및 지구력', '정보 처리\n능력', '사회적 상호작용', '구조화 및\n계획력', '창의적 사고\n및 통찰']; // Chart.js 표시용
+// [수정 반영] Chart.js 표시용 라벨: 줄바꿈 반영
+const CHART_LABELS = ['실행 및 지구력', '정보 처리\n능력', '사회적 상호작용', '구조화 및\n계획력', '창의적 사고\n및 통찰']; 
 
 // 5가지 재미 유형 (결과 이미지 매핑)
 const TYPES = ['fighter', 'scanner', 'director', 'planner', 'explorer'];
@@ -192,6 +192,9 @@ function displayResult(type, scores, maxIndex, minScore) {
     const downloadButton = document.getElementById('download-button');
     const analysisContent = document.getElementById('analysis-content');
 
+    // [수정 반영] 스크롤을 맨 위로 초기화합니다.
+    window.scrollTo(0, 0); 
+
     quizContainer.style.display = 'none';
     resultContainer.style.display = 'block';
     
@@ -209,18 +212,17 @@ function displayResult(type, scores, maxIndex, minScore) {
     createRadarChart(scores);
 }
 
-// Chart.js 생성 함수 (차트 크기 및 눈금 수정 반영)
+// Chart.js 생성 함수 (최종 수정 반영: 단순한 거미줄, 차트 자체 크기 유지)
 function createRadarChart(scores) {
     const ctx = document.getElementById('radarChart').getContext('2d');
     
     const maxPossibleScore = 25; 
 
     const data = {
-        // [수정 반영] 차트 글자 줄바꿈 반영
-        labels: CHART_LABELS, 
+        labels: CHART_LABELS, // 전문 역량 라벨 (줄바꿈 반영)
         datasets: [{
             label: '나의 학습 역량 점수',
-            data: scores, 
+            data: scores, // 계산된 5가지 역량별 점수
             backgroundColor: 'rgba(75, 192, 192, 0.4)',
             borderColor: 'rgba(75, 192, 192, 1)',
             pointBackgroundColor: 'rgba(75, 192, 192, 1)',
@@ -239,10 +241,9 @@ function createRadarChart(scores) {
                 suggestedMin: 0,
                 suggestedMax: maxPossibleScore, 
                 
-                // [수정 반영] 눈금 간격을 12.5로 조정하여 선을 최소화 (중앙, 12.5, 25 세 줄)
                 beginAtZero: true, 
                 ticks: {
-                    stepSize: 12.5, 
+                    stepSize: 12.5, // 눈금 간격을 12.5로 조정하여 선을 최소화 (3개 선)
                     display: false
                 },
                 grid: {
@@ -306,12 +307,12 @@ function getAnalysisText(scores, maxIndex, minScore) {
     
     const maxInfo = detailedInfo[maxArea];
     
-    // 결과 텍스트 조합
+    // 분석 텍스트 조합
     let analysisText = `
-        <p>참가자님의 학습 역량 분석 결과, ' ${maxArea} ' 영역에서 **탁월**하지만, ' ${weaknessAreas.join(' 및 ')} ' 영역에서 **보완**이 필요합니다.</p>
+        <p>참가자님의 학습 역량 분석 결과, '${maxArea}' 영역에서 '탁월'하지만, '${weaknessAreas.join(' 및 ')}' 영역에서 '보완'이 필요합니다.</p>
         
         <p><b>['${maxArea}' (강점) 분석]</b></p>
-        <p>'${maxArea}' 영역은 **'${maxInfo.strength}'**의 특징을 가집니다. 이 강점을 살려 학습 목표를 달성하시길 추천드립니다.</p>
+        <p>'${maxArea}' 영역은 '${maxInfo.strength}'의 특징을 가집니다. 이 강점을 살려 학습 목표를 달성하시길 추천드립니다.</p>
     `;
     
     // 부족한 부분별 상세 조언 추가
@@ -319,7 +320,7 @@ function getAnalysisText(scores, maxIndex, minScore) {
         const itemInfo = detailedInfo[area];
         analysisText += `
             <p><b>['${area}' (보완) 분석]</b></p>
-            <p>'${area}' 영역은 **'${itemInfo.weakness}'**이 필요합니다. 이 영역을 강화하기 위해 **'${itemInfo.tip}'**</p>
+            <p>'${area}' 영역은 '${itemInfo.weakness}'이 필요합니다. 이 영역을 강화하기 위해 '${itemInfo.tip}'</p>
         `;
     });
     

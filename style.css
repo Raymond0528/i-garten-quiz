@@ -89,7 +89,7 @@ body {
 
 /* ----- 결과 화면 디자인 ----- */
 
-/* 현장 이벤트 안내 박스 스타일 */
+/* 현장 이벤트 안내 박스 스타일 (순서 1) */
 .physical-card-info {
     font-size: 1.0em;
     color: #1A237E;
@@ -97,12 +97,12 @@ body {
     padding: 15px;
     border-radius: 8px;
     margin-top: 0; /* 순서 변경으로 상단 마진 제거 */
-    margin-bottom: 25px; /* 하단 마진 추가 */
+    margin-bottom: 25px; 
     text-align: center; 
     line-height: 1.6;
 }
 
-/* 결과 이미지 스타일 */
+/* 결과 이미지 스타일 (순서 2) */
 #result-image-area {
     margin-top: 0;
     margin-bottom: 20px;
@@ -116,7 +116,7 @@ body {
     box-shadow: none;
 }
 
-/* 다운로드 버튼 스타일 */
+/* 다운로드 버튼 스타일 (순서 3) */
 #download-button {
     display: block; 
     width: calc(100% - 40px);
@@ -148,7 +148,7 @@ body {
     text-align: left; 
 }
 
-/* 차트 섹션 박스 스타일 적용 */
+/* 차트 섹션 박스 스타일 적용 (순서 4) */
 #chart-section {
     padding: 20px;
     background-color: #F0F8FF; 
@@ -173,7 +173,7 @@ body {
     margin: 0 auto;
 }
 
-/* 분석 텍스트 섹션 박스 스타일 적용 */
+/* 분석 텍스트 섹션 박스 스타일 적용 (순서 5) */
 #analysis-section {
     padding: 20px;
     background-color: #F0F8FF; 
@@ -193,7 +193,7 @@ body {
     text-align: left;
 }
 
-/* 분석 텍스트 스타일 (문단 내 줄 간격 확대) */
+/* 분석 텍스트 스타일 */
 #expert-analysis {
     text-align: left;
     padding: 10px 0;
@@ -201,6 +201,6 @@ body {
 
 #analysis-content p {
     margin-bottom: 15px;
-    line-height: 1.7; /* 줄 간격 확대 유지 */
+    line-height: 1.7; 
     font-size: 1em;
 }
