@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나의 학습 스타일 진단</title>
     <link rel="stylesheet" href="style.css"> 
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     
@@ -29,6 +31,19 @@
         <a id="download-button" class="action-button" download="아이뜰_학습결과.png">
             결과 이미지 다운로드하기
         </a>
+
+        <div id="chart-analysis-area">
+            <h3>나의 학습 역량 밸런스</h3>
+            <div style="max-width: 400px; margin: 0 auto 30px;">
+                <canvas id="radarChart"></canvas>
+            </div>
+            
+            <div id="expert-analysis">
+                <h4>아이뜰의 분석 및 조언</h4>
+                <p id="analysis-text">결과를 해석 중입니다...</p>
+            </div>
+        </div>
+
 
         <p class="physical-card-info">
             <b>[현장 이벤트]</b><br>
