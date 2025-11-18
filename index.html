@@ -43,7 +43,7 @@
             border-radius: 8px;
             color: #3F2305;
             font-size: 1.1em;
-            line-height: 1.4; /* 라인 높이 감소 */
+            line-height: 1.4;
         }
         .event-box h4 {
             color: #B85C38; 
@@ -53,7 +53,7 @@
             font-weight: bold;
         }
         .event-box p {
-            margin: 3px 0; /* 단락 간격 감소 */
+            margin: 3px 0;
         }
 
         .result-main-title { 
@@ -173,13 +173,13 @@
 
     // [중요] 각 유형별 결과 이미지 URL 설정
     const resultImageUrls = {
-        '짹깍짹깍형': 'images/오리.png',      // 계획/시간 관리 (오리)
-        '폰만봐형': 'images/고슴도치.png',    // 정보 검색/기술 (고슴도치)
-        '그게모지형': 'images/다람쥐.png',    // 탐구/연결 (다람쥐)
-        '잠은낮에형': 'images/부엉이.png',    // 벼락치기/효율 (부엉이)
-        '친구좋아형': 'images/여우.png',     // 협력/대화 (여우)
+        '짹깍짹깍형': 'images/오리.png',      // images/ 폴더 안에 오리.png 파일이 있어야 합니다.
+        '폰만봐형': 'images/고슴도치.png',    
+        '그게모지형': 'images/다람쥐.png',    
+        '잠은낮에형': 'images/부엉이.png',    
+        '친구좋아형': 'images/여우.png',     
         
-        // 조합형 이미지 (선택 사항)
+        // 조합형 이미지 (선택 사항: 파일이 없으면 첫 번째 유형 이미지로 대체됨)
         '짹깍짹깍형+폰만봐형': 'images/오리+고슴도치.png', 
         '다중동점형': 'images/다중동점.png' 
     };
