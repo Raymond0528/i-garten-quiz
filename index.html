@@ -182,6 +182,7 @@
     };
 
     // 결과 우선순위 (높은 순서대로 정렬)
+    // 부엉이 > 여우 > 고슴도치 > 다람쥐(청설모) > 오리
     const priorityOrder = ['잠은낮에형', '친구좋아형', '폰만봐형', '그게모지형', '짹깍짹깍형'];
 
     // 1. 복수 선택 개수 제한 로직 (최대 2개)
@@ -268,7 +269,7 @@
             imageUrl = resultImageUrls[finalResultType];
             imageName = finalResultType;
         } else {
-            // 안전 장치: 이미지 맵에 없는 결과라면 빈 문자열을 사용
+            // 안전 장치: 오류 시 빈 문자열
             imageUrl = '';
             imageName = '오류';
         }
