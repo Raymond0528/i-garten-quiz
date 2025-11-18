@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 학습 스타일 진단하기</title>
+    <style>
+        /* CSS: 스타일 정의 (가을톤) */
+        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
+        
+        h1 { text-align: center; color: #B85C38; margin-bottom: 5px; }
+        .subtitle { text-align: center; font-size: 1.1em; color: #6c757d; margin-bottom: 30px; }
+        
+        /* 퀴즈 문항 스타일 */
+        .question-box { margin-bottom: 35px; border: 1px solid #ddd; padding: 25px; border-radius: 8px; background-color: #ffffff; }
+        .question-title { font-size: 1.3em; color: #3F2305; margin-bottom: 15px; font-weight: bold; }
+        .option { display: block; margin-bottom: 10px; cursor: pointer; padding: 12px; border: 1px solid #eee; border-radius: 6px; transition: background-color 0.2s, border-color 0.2s; }
+        .option:hover { background-color: #f8f9fa; border-color: #DD7230; }
+        .option input[type="checkbox"] { margin-right: 10px; accent-color: #DD7230; }
+        .option input[type="checkbox"]:checked + span { font-weight: bold; color: #65814C; }
+        .option input[type="checkbox"]:checked { box-shadow: 0 0 0 3px #F0EAD6; border-color: #65814C; background-color: #F0EAD6; }
+
+        /* 결과 확인하기 버튼 (볼드체) */
+        #submit-btn { 
+            display: block; width: 100%; padding: 15px; font-size: 1.2em; 
+            background-color: #3F2305; color: white; border: none; 
+            border-radius: 8px; cursor: pointer; transition: background-color 0.3s; 
+            margin-top: 40px; 
+            font-weight: bold;
+        }
+        #submit-btn:hover { background-color: #5C382A; }
+
+        /* 결과 스타일 */
+        #result-section { margin-top: 50px; padding: 30px; border: 2px solid #DD7230; border-radius: 10px; background-color: #FFF8E1; display: none; text-align: center; }
+        
+        /* 현장 이벤트 박스 (간격 축소) */
+        .event-box { 
+            background-color: #F0EAD6; 
+            border: 1px solid #65814C; 
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            color: #3F2305;
+            font-size: 1.1em;
+            line-height: 1.4; /* 라인 높이 감소 */
+        }
+        .event-box h4 {
+            color: #B85C38; 
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .event-box p {
+            margin: 3px 0; /* 단락 간격 감소 */
+        }
+
+        .result-main-title { 
+            font-size: 2.2em; 
+            color: #B85C38; 
+            margin-bottom: 25px; 
+            font-weight: bold;
+        }
+        
+        #result-image { 
+            max-width: 100%; 
+            height: auto; 
+            border-radius: 10px; 
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 다운로드 버튼 (텍스트 변경 및 볼드체) */
+        #download-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            background-color: #65814C; 
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        #download-btn:hover {
+            background-color: #5C6F47;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="quiz-header">
+        <h1>나의 학습 스타일 진단하기</h1>
+        <p class="subtitle">(복수 선택 가능하며, 3개 이내로 선택해주시기 바랍니다.)</p>
+    </div>
+
+    <form id="quiz-form">
+        
+        <div class="question-box">
+            <div class="question-title">1. 공부를 시작하기 전, 나의 준비 과정은?</div>
+            <label class="option"><input type="checkbox" name="q1" value="짹깍짹깍형"><span>오늘 공부 목표와 할 일, 시간을 꼼꼼하게 정리한 뒤 시작한다.</span></label>
+            <label class="option"><input type="checkbox" name="q1" value="폰만봐형"><span>필요한 자료나 매뉴얼을 먼저 찾아보며 감을 잡는다. (인강, 구글링)</span></label>
+            <label class="option"><input type="checkbox" name="q1" value="그게모지형"><span>‘왜 이걸 배우는 걸까?’ ‘나중에 어디에 쓸 수 있을까?’ 먼저 떠올려본다.</span></label>
+            <label class="option"><input type="checkbox" name="q1" value="잠은낮에형"><span>카페인을 수혈하며 밤샐 각오로 늦은 시간에 책상에 앉는다.</span></label>
+            <label class="option"><input type="checkbox" name="q1" value="친구좋아형"><span>함께 공부할 친구에게 연락해서 오늘 몇 시에 어디서 만날지를 정한다.</span></label>
+        </div>
+
+        <div class="question-box">
+            <div class="question-title">2. 이해되지 않는 개념이 나왔을 때 나의 행동은?</div>
+            <label class="option"><input type="checkbox" name="q2" value="그게모지형"><span>이미 알고 있는 개념, 경험과 연결해서 ‘나만의 언어’로 이해한다.</span></label>
+            <label class="option"><input type="checkbox" name="q2" value="폰만봐형"><span>블로그, 유튜브, 구글 다 뒤져서 ‘아 오케이’ 할 때까지 파본다.</span></label>
+            <label class="option"><input type="checkbox" name="q2" value="짹깍짹깍형"><span>계획한 시간을 초과하지 않도록, 정해진 시간 내 이해를 시도한다.</span></label>
+            <label class="option"><input type="checkbox" name="q2" value="친구좋아형"><span>‘이거 무슨 말이야?’ 친구들에게 물어보고, 함께 머리 싸매며 해결한다.</span></label>
+            <label class="option"><input type="checkbox" name="q2" value="잠은낮에형"><span>벼락치기 중 이해는 사치, 일단 외우고 본다.</span></label>
+        </div>
+
+        <div class="question-box">
+            <div class="question-title">3. 공부에 몰입하기 위해 가장 필요한 것은?</div>
+            <label class="option"><input type="checkbox" name="q3" value="짹깍짹깍형"><span>내가 직접 만든 완벽한 계획표, 주차별 목차, 우선순위 리스트</span></label>
+            <label class="option"><input type="checkbox" name="q3" value="친구좋아형"><span>친구들과 자유롭게 질문하고 대화할 수 있는 분위기</span></label>
+            <label class="option"><input type="checkbox" name="q3" value="폰만봐형"><span>노트북, 태블릿, 충전기까지 준비하지만 최종 핵심은 콘센트 확보</span></label>
+            <label class="option"><input type="checkbox" name="q3" value="그게모지형"><span>나의 무궁무진한 탐구심을 충족할 만한 자료와 텍스트</span></label>
+            <label class="option"><input type="checkbox" name="q3" value="잠은낮에형"><span>잠이 오더라도 시험 직전까지 나를 ‘이끄는’ 체력</span></label>
+        </div>
+
+        <div class="question-box">
+            <div class="question-title">4. 시험 기간, 나의 집중력이 가장 높은 시간대는?</div>
+            <label class="option"><input type="checkbox" name="q4" value="잠은낮에형"><span>밤 10시 ~ 새벽 3시, 조용한 새벽 시간</span></label>
+            <label class="option"><input type="checkbox" name="q4" value="친구좋아형"><span>주말이나 공휴일, 친구들과 스터디룸이나 분위기 좋은 카페에서 함께 공부할 때</span></label>
+            <label class="option"><input type="checkbox" name="q4" value="그게모지형"><span>공부 도중 호기심과 궁금증이 터질 때</span></label>
+            <label class="option"><input type="checkbox" name="q4" value="짹깍짹깍형"><span>계획된 루틴과 정해진 일정 내</span></label>
+            <label class="option"><input type="checkbox" name="q4" value="폰만봐형"><span>언제든지, 릴스를 보다가도 언제든 집중 모드로 복귀 가능</span></label>
+        </div>
+
+        <div class="question-box">
+            <div class="question-title">5. 학습 성과를 위해 가장 중요한 것은?</div>
+            <label class="option"><input type="checkbox" name="q5" value="폰만봐형"><span>언제든지 필요한 자료에 즉시 접근할 수 있는 환경 확보 (ex. 인터넷, 클라우드, 노션)</span></label>
+            <label class="option"><input type="checkbox" name="q5" value="잠은낮에형"><span>시험 직전까지 최대 효율로 암기량을 끌어올릴 수 있는 전략과 속도</span></label>
+            <label class="option"><input type="checkbox" name="q5" value="그게모지형"><span>큰 흐름과 개념 사이의 숨겨진 연결고리를 찾는 통찰력</span></label>
+            <label class="option"><input type="checkbox" name="q5" value="짹깍짹깍형"><span>계획한 진도를 지키고 시간 관리를 흔들림 없이 유지하는 태도</span></label>
+            <label class="option"><input type="checkbox" name="q5" value="친구좋아형"><span>함께 공부하며 질문, 피드백을 통해 이루어지는 시너지</span></label>
+        </div>
+        
+        <button type="submit" id="submit-btn">결과 확인하기</button>
+    </form>
+    
+    <div id="result-section">
+        <div class="event-box">
+            <h4>[현장 이벤트]</h4>
+            <p>이 화면을 부스 직원에게 보여주시면,</p>
+            <p>LUCKY BOX를 뽑을 기회를 드립니다!</p>
+        </div>
+        
+        <div class="result-main-title">나의 학습 스타일은?</div>
+        
+        <img id="result-image" src="" alt="나의 학습 스타일 결과 이미지">
+        
+        <a id="download-btn" href="#" download="나의_학습스타일_결과.png">나의 학습 스타일 이미지 다운로드</a>
+    </div>
+</div>
+
+<script>
+    /* JavaScript: 퀴즈 로직 */
+    const form = document.getElementById('quiz-form');
+    const resultSection = document.getElementById('result-section');
+    const resultImage = document.getElementById('result-image');
+    const downloadBtn = document.getElementById('download-btn');
+    const quizHeader = document.getElementById('quiz-header');
+
+    // [중요] 각 유형별 결과 이미지 URL 설정
+    const resultImageUrls = {
+        '짹깍짹깍형': 'images/오리.png',      // 계획/시간 관리 (오리)
+        '폰만봐형': 'images/고슴도치.png',    // 정보 검색/기술 (고슴도치)
+        '그게모지형': 'images/다람쥐.png',    // 탐구/연결 (다람쥐)
+        '잠은낮에형': 'images/부엉이.png',    // 벼락치기/효율 (부엉이)
+        '친구좋아형': 'images/여우.png',     // 협력/대화 (여우)
+        
+        // 조합형 이미지 (선택 사항)
+        '짹깍짹깍형+폰만봐형': 'images/오리+고슴도치.png', 
+        '다중동점형': 'images/다중동점.png' 
+    };
+
+    // 1. 복수 선택 개수 제한 로직 (최대 3개)
+    form.addEventListener('change', (event) => {
+        if (event.target.type === 'checkbox') {
+            const questionName = event.target.name;
+            const checkboxes = document.querySelectorAll(`input[name="${questionName}"]:checked`);
+            
+            if (checkboxes.length > 3) { 
+                alert('각 질문당 최대 3개까지만 선택할 수 있습니다.');
+                event.target.checked = false; 
+            }
+        }
+    });
+
+    // 2. 결과 계산 로직
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        // 선택 여부 확인
+        for (let i = 1; i <= 5; i++) {
+            const checkboxes = document.querySelectorAll(`input[name="q${i}"]:checked`);
+            if (checkboxes.length === 0) {
+                alert(`${i}번 질문에 최소 1개 이상의 답변을 선택해주세요.`);
+                return;
+            }
+        }
+
+        const scores = { '짹깍짹깍형': 0, '폰만봐형': 0, '그게모지형': 0, '잠은낮에형': 0, '친구좋아형': 0 };
+        const formData = new FormData(form);
+
+        for (const [name, value] of formData.entries()) {
+            if (value in scores) {
+                scores[value]++;
+            }
+        }
+
+        let maxScore = 0;
+        let finalTypes = [];
+        
+        for (const type in scores) {
+            if (scores[type] > maxScore) {
+                maxScore = scores[type];
+                finalTypes = [type];
+            } else if (scores[type] === maxScore && maxScore > 0) {
+                finalTypes.push(type);
+            }
+        }
+        
+        if (finalTypes.length > 0) {
+            displayResult(finalTypes);
+        } else {
+            alert('결과를 계산할 수 없습니다. 다시 시도해 주세요.');
+        }
+    });
+
+    // 3. 결과 화면 출력 함수
+    function displayResult(finalTypes) {
+        // 퀴즈 폼과 헤더를 숨기고 결과 섹션 표시
+        quizHeader.style.display = 'none'; 
+        form.style.display = 'none';
+        resultSection.style.display = 'block';
+
+        let imageUrl = '';
+        let imageName = '';
+        
+        if (finalTypes.length === 1) {
+            // 단일 유형
+            const resultType = finalTypes[0];
+            imageUrl = resultImageUrls[resultType];
+            imageName = resultImageUrls[resultType].replace('images/', '').replace('.png', '').replace('.jpg', '');
+        } else if (finalTypes.length === 2) {
+            // 2가지 유형이 동점일 경우
+            const sortedTypes = finalTypes.sort(); 
+            const combinedKey = sortedTypes.join('+');
+            if (resultImageUrls[combinedKey]) {
+                // 조합형 이미지가 있을 경우
+                imageUrl = resultImageUrls[combinedKey];
+                imageName = resultImageUrls[combinedKey].replace('images/', '').replace('.png', '').replace('.jpg', '');
+            } else {
+                // 조합형 이미지가 없으면 첫 번째 유형 이미지 사용
+                imageUrl = resultImageUrls[sortedTypes[0]];
+                imageName = resultImageUrls[sortedTypes[0]].replace('images/', '').replace('.png', '').replace('.jpg', '') + ' 외';
+            }
+        } else if (finalTypes.length >= 3) {
+            // 3가지 이상 동점일 경우
+            imageUrl = resultImageUrls['다중동점형']; 
+            imageName = '다중동점형';
+        }
+        
+        resultImage.src = imageUrl;
+        resultImage.alt = `${imageName} 학습 스타일 결과 이미지`;
+        downloadBtn.href = imageUrl; 
+        downloadBtn.download = `나의_학습스타일_${imageName}_결과.png`;
+    }
+</script>
+</body>
+</html>
