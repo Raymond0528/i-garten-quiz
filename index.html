@@ -159,7 +159,7 @@
         
         <img id="result-image" src="" alt="나의 학습 스타일 결과 이미지">
         
-        <a id="download-btn" href="#" download="나의_학습스타일_결과.png">나의 학습 스타일 이미지 다운로드</a>
+        <a id="download-btn" href="#" target="_blank">나의 학습 스타일 이미지 보기</a>
     </div>
 </div>
 
@@ -171,15 +171,15 @@
     const downloadBtn = document.getElementById('download-btn');
     const quizHeader = document.getElementById('quiz-header');
 
-    // [중요] 각 유형별 결과 이미지 URL 설정
+    // [중요] 각 유형별 결과 이미지 URL 설정 (경로: images/ 폴더 아래)
     const resultImageUrls = {
-        '짹깍짹깍형': 'images/오리.png',      // images/ 폴더 안에 오리.png 파일이 있어야 합니다.
+        '짹깍짹깍형': 'images/오리.png',      
         '폰만봐형': 'images/고슴도치.png',    
         '그게모지형': 'images/다람쥐.png',    
         '잠은낮에형': 'images/부엉이.png',    
         '친구좋아형': 'images/여우.png',     
         
-        // 조합형 이미지 (선택 사항: 파일이 없으면 첫 번째 유형 이미지로 대체됨)
+        // 조합형 이미지 (선택 사항)
         '짹깍짹깍형+폰만봐형': 'images/오리+고슴도치.png', 
         '다중동점형': 'images/다중동점.png' 
     };
@@ -275,7 +275,8 @@
         resultImage.src = imageUrl;
         resultImage.alt = `${imageName} 학습 스타일 결과 이미지`;
         downloadBtn.href = imageUrl; 
-        downloadBtn.download = `나의_학습스타일_${imageName}_결과.png`;
+        downloadBtn.download = ''; // 다운로드 속성 제거
+        downloadBtn.target = '_blank'; // 새 탭에서 열기
     }
 </script>
 </body>
