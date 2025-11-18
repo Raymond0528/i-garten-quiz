@@ -63,16 +63,30 @@
             font-weight: bold;
         }
         
-        #result-image { 
+        /* 이미지 및 버튼 컨테이너 스타일 */
+        .result-item {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        .result-item h3 {
+            color: #3F2305;
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .result-item img { 
             max-width: 100%; 
             height: auto; 
             border-radius: 10px; 
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         /* 다운로드 버튼 (텍스트 변경 및 볼드체) */
-        #download-btn {
+        .download-btn-style { /* 클래스 이름으로 변경 */
             display: inline-block;
             padding: 15px 30px;
             font-size: 1.1em;
@@ -85,7 +99,7 @@
             text-decoration: none;
             font-weight: bold;
         }
-        #download-btn:hover {
+        .download-btn-style:hover {
             background-color: #5C6F47;
         }
     </style>
@@ -157,9 +171,8 @@
         
         <div class="result-main-title">나의 학습 스타일은?</div>
         
-        <img id="result-image" src="" alt="나의 학습 스타일 결과 이미지">
-        
-        <a id="download-btn" href="#" target="_blank">나의 학습 스타일 이미지 보기</a>
+        <div id="result-images-container">
+            </div>
     </div>
 </div>
 
@@ -167,22 +180,16 @@
     /* JavaScript: 퀴즈 로직 */
     const form = document.getElementById('quiz-form');
     const resultSection = document.getElementById('result-section');
-    const resultImage = document.getElementById('result-image');
-    const downloadBtn = document.getElementById('download-btn');
+    const resultImagesContainer = document.getElementById('result-images-container'); // 새 컨테이너
     const quizHeader = document.getElementById('quiz-header');
 
-    // [중요] 각 유형별 결과 이미지 URL 설정 (경로: images/ 폴더 아래)
-    // 한글 파일 이름 오류 방지를 위해 영문 이름으로 통일
+    // [중요] 각 유형별 결과 이미지 URL 설정 (조합형 제거)
     const resultImageUrls = {
-        '짹깍짹깍형': 'images/duck.png',      // 오리 -> duck.png
-        '폰만봐형': 'images/hedgehog.png',    // 고슴도치 -> hedgehog.png
-        '그게모지형': 'images/squirrel.png', // 다람쥐 -> squirrel.png
-        '잠은낮에형': 'images/owl.png',      // 부엉이 -> owl.png
-        '친구좋아형': 'images/fox.png',      // 여우 -> fox.png
-        
-        // 조합형 이미지 (선택 사항)
-        '짹깍짹깍형+폰만봐형': 'images/duck+hedgehog.png', 
-        '다중동점형': 'images/multi_type.png' 
+        '짹깍짹깍형': { name: '오리', url: 'images/duck.png' },      
+        '폰만봐형': { name: '고슴도치', url: 'images/hedgehog.png' },    
+        '그게모지형': { name: '다람쥐', url: 'images/squirrel.png' }, 
+        '잠은낮에형': { name: '부엉이', url: 'images/owl.png' },      
+        '친구좋아형': { name: '여우', url: 'images/fox.png' }
     };
 
     // 1. 복수 선택 개수 제한 로직 (최대 3개)
@@ -239,45 +246,46 @@
         }
     });
 
-    // 3. 결과 화면 출력 함수
+    // 3. 결과 화면 출력 함수 (다중 이미지 나열)
     function displayResult(finalTypes) {
         // 퀴즈 폼과 헤더를 숨기고 결과 섹션 표시
         quizHeader.style.display = 'none'; 
         form.style.display = 'none';
         resultSection.style.display = 'block';
 
-        let imageUrl = '';
-        let imageName = '';
+        // 이전 결과 초기화
+        resultImagesContainer.innerHTML = '';
         
-        if (finalTypes.length === 1) {
-            // 단일 유형
-            const resultType = finalTypes[0];
-            imageUrl = resultImageUrls[resultType];
-            imageName = resultImageUrls[resultType].replace('images/', '').replace('.png', '').replace('.jpg', '');
-        } else if (finalTypes.length === 2) {
-            // 2가지 유형이 동점일 경우
-            const sortedTypes = finalTypes.sort(); 
-            const combinedKey = sortedTypes.join('+');
-            if (resultImageUrls[combinedKey]) {
-                // 조합형 이미지가 있을 경우
-                imageUrl = resultImageUrls[combinedKey];
-                imageName = resultImageUrls[combinedKey].replace('images/', '').replace('.png', '').replace('.jpg', '');
-            } else {
-                // 조합형 이미지가 없으면 첫 번째 유형 이미지 사용
-                imageUrl = resultImageUrls[sortedTypes[0]];
-                imageName = resultImageUrls[sortedTypes[0]].replace('images/', '').replace('.png', '').replace('.jpg', '') + ' 외';
-            }
-        } else if (finalTypes.length >= 3) {
-            // 3가지 이상 동점일 경우
-            imageUrl = resultImageUrls['다중동점형']; 
-            imageName = '다중동점형';
-        }
-        
-        resultImage.src = imageUrl;
-        resultImage.alt = `${imageName} 학습 스타일 결과 이미지`;
-        downloadBtn.href = imageUrl; 
-        downloadBtn.download = ''; // 다운로드 속성 제거
-        downloadBtn.target = '_blank'; // 새 탭에서 열기
+        // 결과 이미지들을 생성하여 나열
+        finalTypes.forEach((type, index) => {
+            const data = resultImageUrls[type];
+            if (!data) return; // 데이터가 없으면 건너뛰기
+
+            const resultItem = document.createElement('div');
+            resultItem.className = 'result-item';
+
+            // 결과 제목 (예: 1번 이미지 - 오리형)
+            const title = document.createElement('h3');
+            title.textContent = `${index + 1}번 결과: ${data.name} (${type})`;
+
+            // 이미지 요소
+            const img = document.createElement('img');
+            img.src = data.url;
+            img.alt = `${data.name} 학습 스타일 결과 이미지`;
+
+            // 다운로드 버튼
+            const downloadBtn = document.createElement('a');
+            downloadBtn.className = 'download-btn-style';
+            downloadBtn.href = data.url;
+            downloadBtn.target = '_blank';
+            downloadBtn.textContent = '나의 학습 스타일 이미지 보기';
+
+            resultItem.appendChild(title);
+            resultItem.appendChild(img);
+            resultItem.appendChild(downloadBtn);
+            
+            resultImagesContainer.appendChild(resultItem);
+        });
     }
 </script>
 </body>
