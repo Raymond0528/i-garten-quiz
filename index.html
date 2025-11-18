@@ -95,7 +95,7 @@
 <div class="container">
     <div id="quiz-header">
         <h1>나의 학습 스타일 진단하기</h1>
-        <p class="subtitle">(복수 선택 가능하며, 3개 이내로 선택해주시기 바랍니다.)</p>
+        <p class="subtitle">(복수 선택 가능하며, **2개 이내**로 선택해주시기 바랍니다.)</p>
     </div>
 
     <form id="quiz-form">
@@ -180,14 +180,14 @@
         '친구좋아형': 'images/fox.png'
     };
 
-    // 1. 복수 선택 개수 제한 로직 (최대 3개)
+    // 1. 복수 선택 개수 제한 로직 (최대 2개로 변경)
     form.addEventListener('change', (event) => {
         if (event.target.type === 'checkbox') {
             const questionName = event.target.name;
             const checkboxes = document.querySelectorAll(`input[name="${questionName}"]:checked`);
             
-            if (checkboxes.length > 3) { 
-                alert('각 질문당 최대 3개까지만 선택할 수 있습니다.');
+            if (checkboxes.length > 2) { // ⭐ 2개 초과 시 경고
+                alert('각 질문당 최대 2개까지만 선택할 수 있습니다.');
                 event.target.checked = false; 
             }
         }
@@ -249,10 +249,10 @@
         
         // 결과 이미지 URL 설정
         if (finalResultType && resultImageUrls[finalResultType]) {
-            imageUrl = resultImageUrls[finalResultType].url || resultImageUrls[finalResultType];
+            imageUrl = resultImageUrls[finalResultType];
             imageName = finalResultType;
         } else {
-            // 안전 장치: 이미지 맵에 없는 결과라면 빈 문자열을 사용 (사진이 안 뜨게 됨)
+            // 안전 장치
             imageUrl = '';
             imageName = '오류';
         }
@@ -262,11 +262,8 @@
         resultImage.alt = `${imageName} 학습 스타일 결과 이미지`;
         
         downloadBtn.href = imageUrl; 
-        downloadBtn.download = `나의_학습스타일_${imageName}_결과.png`; // 다운로드 파일 이름은 첫 번째 유형으로 지정
+        downloadBtn.download = `나의_학습스타일_${imageName}_결과.png`; 
         downloadBtn.target = '_blank';
-        
-        // 이미지 경로 문제 진단을 위한 로그 (개발자 도구에서 확인 가능)
-        console.log(`Final Result: ${finalResultType}, URL: ${imageUrl}`);
     }
 </script>
 </body>
