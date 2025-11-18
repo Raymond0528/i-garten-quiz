@@ -10,6 +10,7 @@
         .container { max-width: 800px; margin: 0 auto; background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
         
         h1 { text-align: center; color: #B85C38; margin-bottom: 5px; }
+        /* 제목 수정: 2개 이내로 변경 */
         .subtitle { text-align: center; font-size: 1.1em; color: #6c757d; margin-bottom: 30px; }
         
         /* 퀴즈 문항 스타일 */
@@ -180,7 +181,10 @@
         '친구좋아형': 'images/fox.png'
     };
 
-    // 1. 복수 선택 개수 제한 로직 (최대 2개로 변경)
+    // 결과 우선순위 (높은 순서대로 정렬)
+    const priorityOrder = ['잠은낮에형', '친구좋아형', '폰만봐형', '그게모지형', '짹깍짹깍형'];
+
+    // 1. 복수 선택 개수 제한 로직 (최대 2개)
     form.addEventListener('change', (event) => {
         if (event.target.type === 'checkbox') {
             const questionName = event.target.name;
@@ -234,25 +238,37 @@
         }
     });
 
-    // 3. 결과 화면 출력 함수 (동점 시 첫 번째 결과만 출력)
+    // 3. 결과 화면 출력 함수 (우선순위 적용)
     function displayResult(finalTypes) {
         // 퀴즈 폼과 헤더를 숨기고 결과 섹션 표시
         quizHeader.style.display = 'none'; 
         form.style.display = 'none';
         resultSection.style.display = 'block';
 
-        // ⭐ 핵심 수정: 동점 여부와 관계없이 무조건 첫 번째 최고점 유형만 사용합니다.
-        const finalResultType = finalTypes[0]; 
+        let finalResultType = '';
+
+        if (finalTypes.length === 1) {
+            // 단일 최고점인 경우 그대로 사용
+            finalResultType = finalTypes[0];
+        } else {
+            // ⭐ 동점일 경우 우선순위 로직 적용
+            for (const prioritizedType of priorityOrder) {
+                if (finalTypes.includes(prioritizedType)) {
+                    finalResultType = prioritizedType;
+                    break; // 가장 높은 우선순위의 유형을 찾으면 루프 종료
+                }
+            }
+        }
         
         let imageUrl = '';
         let imageName = '';
         
-        // 결과 이미지 URL 설정
+        // 이미지 URL 설정
         if (finalResultType && resultImageUrls[finalResultType]) {
             imageUrl = resultImageUrls[finalResultType];
             imageName = finalResultType;
         } else {
-            // 안전 장치
+            // 안전 장치: 이미지 맵에 없는 결과라면 빈 문자열을 사용
             imageUrl = '';
             imageName = '오류';
         }
