@@ -63,30 +63,16 @@
             font-weight: bold;
         }
         
-        /* 이미지 및 버튼 컨테이너 스타일 */
-        .result-item {
-            margin-bottom: 30px;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #ffffff;
-        }
-        .result-item h3 {
-            color: #3F2305;
-            font-size: 1.5em;
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-        .result-item img { 
+        #result-image { 
             max-width: 100%; 
             height: auto; 
             border-radius: 10px; 
-            margin-bottom: 15px;
+            margin-bottom: 30px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         /* 다운로드 버튼 (텍스트 변경 및 볼드체) */
-        .download-btn-style { /* 클래스 이름으로 변경 */
+        #download-btn {
             display: inline-block;
             padding: 15px 30px;
             font-size: 1.1em;
@@ -99,7 +85,7 @@
             text-decoration: none;
             font-weight: bold;
         }
-        .download-btn-style:hover {
+        #download-btn:hover {
             background-color: #5C6F47;
         }
     </style>
@@ -171,8 +157,9 @@
         
         <div class="result-main-title">나의 학습 스타일은?</div>
         
-        <div id="result-images-container">
-            </div>
+        <img id="result-image" src="" alt="나의 학습 스타일 결과 이미지">
+        
+        <a id="download-btn" href="#" target="_blank">나의 학습 스타일 이미지 보기</a>
     </div>
 </div>
 
@@ -180,16 +167,17 @@
     /* JavaScript: 퀴즈 로직 */
     const form = document.getElementById('quiz-form');
     const resultSection = document.getElementById('result-section');
-    const resultImagesContainer = document.getElementById('result-images-container'); // 새 컨테이너
+    const resultImage = document.getElementById('result-image');
+    const downloadBtn = document.getElementById('download-btn');
     const quizHeader = document.getElementById('quiz-header');
 
-    // [중요] 각 유형별 결과 이미지 URL 설정 (조합형 제거)
+    // [중요] 각 유형별 결과 이미지 URL 설정 (영문 이름으로 통일)
     const resultImageUrls = {
-        '짹깍짹깍형': { name: '오리', url: 'images/duck.png' },      
-        '폰만봐형': { name: '고슴도치', url: 'images/hedgehog.png' },    
-        '그게모지형': { name: '다람쥐', url: 'images/squirrel.png' }, 
-        '잠은낮에형': { name: '부엉이', url: 'images/owl.png' },      
-        '친구좋아형': { name: '여우', url: 'images/fox.png' }
+        '짹깍짹깍형': 'images/duck.png',      
+        '폰만봐형': 'images/hedgehog.png',    
+        '그게모지형': 'images/squirrel.png', 
+        '잠은낮에형': 'images/owl.png',      
+        '친구좋아형': 'images/fox.png'
     };
 
     // 1. 복수 선택 개수 제한 로직 (최대 3개)
@@ -246,46 +234,39 @@
         }
     });
 
-    // 3. 결과 화면 출력 함수 (다중 이미지 나열)
+    // 3. 결과 화면 출력 함수 (동점 시 첫 번째 결과만 출력)
     function displayResult(finalTypes) {
         // 퀴즈 폼과 헤더를 숨기고 결과 섹션 표시
         quizHeader.style.display = 'none'; 
         form.style.display = 'none';
         resultSection.style.display = 'block';
 
-        // 이전 결과 초기화
-        resultImagesContainer.innerHTML = '';
+        // ⭐ 핵심 수정: 동점 여부와 관계없이 무조건 첫 번째 최고점 유형만 사용합니다.
+        const finalResultType = finalTypes[0]; 
         
-        // 결과 이미지들을 생성하여 나열
-        finalTypes.forEach((type, index) => {
-            const data = resultImageUrls[type];
-            if (!data) return; // 데이터가 없으면 건너뛰기
+        let imageUrl = '';
+        let imageName = '';
+        
+        // 결과 이미지 URL 설정
+        if (finalResultType && resultImageUrls[finalResultType]) {
+            imageUrl = resultImageUrls[finalResultType].url || resultImageUrls[finalResultType];
+            imageName = finalResultType;
+        } else {
+            // 안전 장치: 이미지 맵에 없는 결과라면 빈 문자열을 사용 (사진이 안 뜨게 됨)
+            imageUrl = '';
+            imageName = '오류';
+        }
 
-            const resultItem = document.createElement('div');
-            resultItem.className = 'result-item';
-
-            // 결과 제목 (예: 1번 이미지 - 오리형)
-            const title = document.createElement('h3');
-            title.textContent = `${index + 1}번 결과: ${data.name} (${type})`;
-
-            // 이미지 요소
-            const img = document.createElement('img');
-            img.src = data.url;
-            img.alt = `${data.name} 학습 스타일 결과 이미지`;
-
-            // 다운로드 버튼
-            const downloadBtn = document.createElement('a');
-            downloadBtn.className = 'download-btn-style';
-            downloadBtn.href = data.url;
-            downloadBtn.target = '_blank';
-            downloadBtn.textContent = '나의 학습 스타일 이미지 보기';
-
-            resultItem.appendChild(title);
-            resultItem.appendChild(img);
-            resultItem.appendChild(downloadBtn);
-            
-            resultImagesContainer.appendChild(resultItem);
-        });
+        // 이미지 표시 및 버튼 설정
+        resultImage.src = imageUrl; 
+        resultImage.alt = `${imageName} 학습 스타일 결과 이미지`;
+        
+        downloadBtn.href = imageUrl; 
+        downloadBtn.download = `나의_학습스타일_${imageName}_결과.png`; // 다운로드 파일 이름은 첫 번째 유형으로 지정
+        downloadBtn.target = '_blank';
+        
+        // 이미지 경로 문제 진단을 위한 로그 (개발자 도구에서 확인 가능)
+        console.log(`Final Result: ${finalResultType}, URL: ${imageUrl}`);
     }
 </script>
 </body>
