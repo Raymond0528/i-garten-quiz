@@ -172,16 +172,17 @@
     const quizHeader = document.getElementById('quiz-header');
 
     // [중요] 각 유형별 결과 이미지 URL 설정 (경로: images/ 폴더 아래)
+    // 한글 파일 이름 오류 방지를 위해 영문 이름으로 통일
     const resultImageUrls = {
-        '짹깍짹깍형': 'images/오리.png',      
-        '폰만봐형': 'images/고슴도치.png',    
-        '그게모지형': 'images/다람쥐.png',    
-        '잠은낮에형': 'images/부엉이.png',    
-        '친구좋아형': 'images/여우.png',     
+        '짹깍짹깍형': 'images/duck.png',      // 오리 -> duck.png
+        '폰만봐형': 'images/hedgehog.png',    // 고슴도치 -> hedgehog.png
+        '그게모지형': 'images/squirrel.png', // 다람쥐 -> squirrel.png
+        '잠은낮에형': 'images/owl.png',      // 부엉이 -> owl.png
+        '친구좋아형': 'images/fox.png',      // 여우 -> fox.png
         
         // 조합형 이미지 (선택 사항)
-        '짹깍짹깍형+폰만봐형': 'images/오리+고슴도치.png', 
-        '다중동점형': 'images/다중동점.png' 
+        '짹깍짹깍형+폰만봐형': 'images/duck+hedgehog.png', 
+        '다중동점형': 'images/multi_type.png' 
     };
 
     // 1. 복수 선택 개수 제한 로직 (최대 3개)
