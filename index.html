@@ -251,13 +251,9 @@
             // 단일 최고점인 경우 그대로 사용
             finalResultType = finalTypes[0];
         } else {
-            // ⭐ 동점일 경우 우선순위 로직 적용
-            for (const prioritizedType of priorityOrder) {
-                if (finalTypes.includes(prioritizedType)) {
-                    finalResultType = prioritizedType;
-                    break; // 가장 높은 우선순위의 유형을 찾으면 루프 종료
-                }
-            }
+            // 동점일 경우 랜덤으로 하나 선택
+            const randomIdx = Math.floor(Math.random() * finalTypes.length);
+            finalResultType = finalTypes[randomIdx];
         }
         
         let imageUrl = '';
